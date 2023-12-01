@@ -97,7 +97,7 @@ void BinaryTree<TreeItemType, FunctionType>::attachRight(
 template <typename TreeItemType, typename FunctionType>
 void BinaryTree<TreeItemType, FunctionType>::attachLeftSubtree(
     BinaryTree &leftTree) {
-  if (root == nullptr) {
+if (root == nullptr) {
     throw std::logic_error("Empty tree in BinaryTree::attachLeftSubtree");
   } else if (root->leftChildPtr != nullptr) {
     throw std::logic_error("Cannot overwrite left subtree");
@@ -241,16 +241,18 @@ template <typename TreeItemType, typename FunctionType>
 BinaryTree<TreeItemType, FunctionType> BinaryTree<TreeItemType, FunctionType>::makeBinaryTree(const TreeItemType *array, int low, int high) {
     std::cout << "low, high = " << low << " " << high << std::endl;
     //TODO
-   if (low > high) {
-    return BinaryTree(); // Empty tree
-  }
+    if (low > high) {
+        return BinaryTree(); // Empty tree
+    }
 
-  int mid = (low + high) / 2;
-  BinaryTree<TreeItemType, FunctionType> tree(array[mid]);
+    int mid = (low + high) / 2;
+    BinaryTree<TreeItemType, FunctionType> tree(array[mid]);
 
-  // Recursively build left and right subtrees
-  tree.attachLeftSubtree(makeBinaryTree(array, low, mid - 1));
-  tree.attachRightSubtree(makeBinaryTree(array, mid + 1, high));
+    BinaryTree<TreeItemType, FunctionType> leftSubtree = makeBinaryTree(array, low, mid - 1);
+    BinaryTree<TreeItemType, FunctionType> rightSubtree = makeBinaryTree(array, mid + 1, high);
 
-  return tree;
+    tree.attachLeftSubtree(leftSubtree);
+    tree.attachRightSubtree(rightSubtree);
+
+    return tree;
 }
